@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.5">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">import React, { useState, useEffect } from 'react';</p>
+<p class="p1">import { Play, Pause, Users, Clock, Gamepad2, Award, ChevronRight, Zap, Code, Paintbrush, Mic2, Swords, Ghost, Film } from 'lucide-react';</p>
+<p class="p2"><br></p>
+<p class="p1">// --- Data Configuration ---</p>
+<p class="p1">// [Instructions]: Paste the YouTube Embed link in the videoUrl field.</p>
+<p class="p1">// Format example: "https://www.youtube.com/embed/VIDEO_ID"</p>
+<p class="p1">// Note: Must be an /embed/ type link, not a standard /watch?v= link, otherwise it cannot play directly on the page.</p>
+<p class="p2"><br></p>
+<p class="p1">const projects = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 1,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>period: "2022.01 - 2023.5",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: "Project Invictus",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>genre: "Action RPG",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>description: "The thrilling adventure of the GhostPunks, young heroes with spirit animals in the near-future New Golden City. They protect their world from The Fallow's monsters while navigating self-discovery, loyalty, and hidden agendas.",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tags: ["UE5", "Combat System", "Open World"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>videoThumbnail: "bg-gradient-to-br from-red-900 to-slate-800",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Main Video Link</p>
+<p class="p1"><span class="Apple-converted-space">    </span>mainVideoUrl: "", // &lt;--- Paste Project Invictus main video link here</p>
+<p class="p1"><span class="Apple-converted-space">    </span>assets: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>title: "Game Art",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>videoUrl: "" // &lt;--- Paste Game Art video link here</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>title: "Game Concept",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>videoUrl: "" // &lt;--- Paste Game Concept video link here</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 2,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>period: "2023.5 - 2024.12",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: "Project Athena",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>genre: "Mythological Squad ARPG",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>description: "The ultimate mythological fantasy live-service ARPG. Lead a squad of rebel demigods—from Greek, Nordic, Chinese, and Egyptian legends—against corrupt ancient gods. Features deep elemental combat synergies, 'Magical Realism' visuals, and intense cooperative dungeon crawling.",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tags: ["UE5", "GaaS", "Open World", "Co-op"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>videoThumbnail: "bg-gradient-to-br from-blue-900 to-slate-800",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Main Video Link</p>
+<p class="p1"><span class="Apple-converted-space">    </span>mainVideoUrl: "", // &lt;--- Paste Project Athena main video link here</p>
+<p class="p1"><span class="Apple-converted-space">    </span>assets: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>title: "Multicharacter Coop",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>videoUrl: "" // &lt;--- Paste Multicharacter Coop video link here</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>title: "Tech Showcase",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>videoUrl: "" // &lt;--- Paste Tech Showcase video link here</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>title: "Character Showcase",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>videoUrl: "" // &lt;--- Paste Character Showcase video link here</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 3,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>period: "2025.1 - 2025.3",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: "Project AC HD",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>genre: "Historical ARPG",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>description: "A 'Chinese Assassin's Creed' set during the Qin and Han Dynasties. A hardcore ARPG focused on PVE experiences, recreating the legend of Eastern assassins against a magnificent historical backdrop.",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tags: ["Qin &amp; Han Dynasty", "PVE", "ARPG"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>videoThumbnail: "bg-gradient-to-br from-amber-700 to-slate-800",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Main Video Link</p>
+<p class="p1"><span class="Apple-converted-space">    </span>mainVideoUrl: "", // &lt;--- Paste Project AC HD main video link here</p>
+<p class="p1"><span class="Apple-converted-space">    </span>assets: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>title: "Art Showcase",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>videoUrl: "" // &lt;--- Paste Art Showcase video link here</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 4,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>period: "2025.4 - 2025.9",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: "A Chinese Ghost Story PVE",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>genre: "Oriental Fantasy PVE",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>description: "Development of the PVE mode for 'A Chinese Ghost Story'. Constructed dungeon mechanics and Boss fight designs rich in Oriental charm.",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tags: ["Oriental Style", "Boss Fight", "Network Optimization"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>videoThumbnail: "bg-gradient-to-br from-emerald-900 to-slate-800",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Main Video Link</p>
+<p class="p1"><span class="Apple-converted-space">    </span>mainVideoUrl: "", // &lt;--- Paste Chinese Ghost Story main video link here</p>
+<p class="p1"><span class="Apple-converted-space">    </span>assets: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>title: "Art Showcase",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>videoUrl: "" // &lt;--- Paste Art Showcase video link here</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 5,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>period: "2025.9 - 2025.11",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: "4v1 Asymetric lite horror",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>genre: "Liaozhai Survival Horror",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>description: "A lightweight asymmetric survival horror game based on the 'Strange Stories from a Chinese Studio' (Liaozhai) universe. Blending Chinese folk horror aesthetics, players experience thrilling psychological mind games between scholars and spirits in an eerie atmosphere.",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tags: ["Liaozhai Theme", "Chinese Horror", "4v1"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>videoThumbnail: "bg-gradient-to-br from-purple-900 to-slate-900",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Main Video Link</p>
+<p class="p1"><span class="Apple-converted-space">    </span>mainVideoUrl: "", // &lt;--- Paste Horror Game main video link here</p>
+<p class="p1"><span class="Apple-converted-space">    </span>assets: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>title: "Character Benchmark",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>videoUrl: "" // &lt;--- Paste Character Benchmark video link here</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>title: "Environment Art",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>videoUrl: "" // &lt;--- Paste Environment Art video link here</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>title: "AI Concept Video",<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>videoUrl: "" // &lt;--- Paste AI Concept video link here</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>]</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">const teamMembers = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 1,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>name: "Alex Chen",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>role: "Producer / Lead Designer",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>specialties: ["Gameplay Architecture", "Economy Balance", "Project Management"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>pastWorks: ["Project Invictus", "Famous MOBA Mobile Game"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>icon: &lt;Gamepad2 className="w-8 h-8 text-indigo-400" /&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>avatarColor: "bg-indigo-600"</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 2,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>name: "Sarah Lin",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>role: "Lead Artist / Concept Design",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>specialties: ["Character Concept", "UI/UX", "Stylized Rendering"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>pastWorks: ["Project Athena", "A Chinese Ghost Story"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>icon: &lt;Paintbrush className="w-8 h-8 text-pink-400" /&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>avatarColor: "bg-pink-600"</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 3,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>name: "David Wu",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>role: "Technical Director (Client)",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>specialties: ["UE5/Unity", "Graphics Algorithms", "Performance Optimization"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>pastWorks: ["Project AC HD", "AAA Console Projects"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>icon: &lt;Code className="w-8 h-8 text-blue-400" /&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>avatarColor: "bg-blue-600"</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id: 4,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>name: "Mike Zhang",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>role: "Audio &amp; Narrative Design",</p>
+<p class="p1"><span class="Apple-converted-space">    </span>specialties: ["Immersive Audio", "World Building", "Story Scripting"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>pastWorks: ["4v1 Horror", "Award-winning Indie Game"],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>icon: &lt;Mic2 className="w-8 h-8 text-amber-400" /&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>avatarColor: "bg-amber-600"</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">// --- Components ---</p>
+<p class="p2"><br></p>
+<p class="p1">const VideoPlayer = ({ title, thumbnailClass, videoUrl, isMain }) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [isPlaying, setIsPlaying] = useState(false);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Reset play state when video URL changes</p>
+<p class="p1"><span class="Apple-converted-space">  </span>useEffect(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setIsPlaying(false);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}, [videoUrl]);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div className="relative w-full aspect-video rounded-lg overflow-hidden border border-slate-700 shadow-xl group bg-black/80 backdrop-blur-sm transition-all duration-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{isPlaying &amp;&amp; videoUrl ? (</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;iframe<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">          </span>className="w-full h-full animate-fade-in"</p>
+<p class="p1"><span class="Apple-converted-space">          </span>src={`${videoUrl}?autoplay=1`}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">          </span>title={title}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>frameBorder="0"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">          </span>allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">          </span>allowFullScreen</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&gt;&lt;/iframe&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>) : (</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className={`w-full h-full ${thumbnailClass} flex items-center justify-center transition-all duration-500 group-hover:opacity-90 relative`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all" /&gt;</p>
+<p class="p2"><span class="Apple-converted-space">          </span></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="z-10 text-center px-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;h3 className="text-white font-bold text-xl mb-2 drop-shadow-md"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>{isMain ? `${title} Main Trailer` : title}</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>{videoUrl ? (</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                  </span>onClick={() =&gt; setIsPlaying(true)}</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>className="bg-white/10 hover:bg-indigo-500 text-white rounded-full p-4 backdrop-blur-sm border border-white/20 transition-all transform hover:scale-110"</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;Play fill="currentColor" size={32} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>) : (</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;div className="flex flex-col items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;p className="text-slate-400 text-sm bg-black/50 px-3 py-1 rounded border border-white/10"&gt;No video link available&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>);</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">const ProjectCard = ({ project, index }) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const isLeft = index % 2 === 0;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// State management: Which video the player should currently display. Defaults to main project video.</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [currentVideo, setCurrentVideo] = useState({</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: project.title,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>url: project.mainVideoUrl,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>isMain: true</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div className={`flex flex-col md:flex-row items-center justify-between w-full mb-16 md:mb-24 relative ${isLeft ? 'md:flex-row-reverse' : ''}`}&gt;</p>
+<p class="p2"><span class="Apple-converted-space">      </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Center Line Dot (Desktop) */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-indigo-500 items-center justify-center z-10 shadow-[0_0_15px_rgba(99,102,241,0.5)]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="w-3 h-3 bg-white rounded-full" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Content Block */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className={`w-full md:w-[45%] ${isLeft ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'} mb-8 md:mb-0`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className={`inline-block px-3 py-1 rounded-full text-sm font-mono font-bold mb-2 ${isLeft ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-indigo-600 to-transparent text-white border border-indigo-400/30`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{project.period}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2 className="text-3xl md:text-4xl font-extrabold text-white mb-2 tracking-tight drop-shadow-lg"&gt;{project.title}&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className={`flex flex-wrap gap-2 mb-4 ${isLeft ? 'md:justify-end' : 'md:justify-start'}`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span className="px-2 py-0.5 bg-slate-900/80 text-slate-300 text-xs rounded border border-slate-700"&gt;{project.genre}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{project.tags.map(tag =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;span key={tag} className="px-2 py-0.5 bg-slate-900/80 text-indigo-300 text-xs rounded border border-slate-700"&gt;{tag}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p className="text-slate-300 leading-relaxed mb-6 font-medium drop-shadow-md bg-black/20 p-2 rounded"&gt;{project.description}&lt;/p&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>{/* More Video Showcase Area (Click to switch video) */}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className={`space-y-3 ${isLeft ? 'items-end' : 'items-start'} flex flex-col w-full`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">           </span>&lt;h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2 bg-black/30 px-2 py-1 rounded"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;Film size={12} /&gt; More Video Showcases</p>
+<p class="p1"><span class="Apple-converted-space">           </span>&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">           </span>&lt;div className={`flex flex-wrap gap-3 ${isLeft ? 'justify-end' : 'justify-start'}`}&gt;</p>
+<p class="p2"><span class="Apple-converted-space">              </span></p>
+<p class="p1"><span class="Apple-converted-space">              </span>{/* Reset to Main Video Button (Shows if current video is not main) */}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>{!currentVideo.isMain &amp;&amp; (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                  </span>onClick={() =&gt; setCurrentVideo({ title: project.title, url: project.mainVideoUrl, isMain: true })}</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>className="group relative cursor-pointer overflow-hidden rounded-lg border border-indigo-500 w-28 h-16 bg-slate-800 hover:bg-slate-700 transition-all flex items-center justify-center"</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;span className="text-[10px] font-bold text-indigo-300"&gt;Back to Main&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>)}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">              </span>{project.assets.map((asset, i) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                  </span>key={i}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                  </span>onClick={() =&gt; setCurrentVideo({ title: asset.title, url: asset.videoUrl, isMain: false })}</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>className={`group relative cursor-pointer overflow-hidden rounded-lg border w-28 h-16 bg-slate-800 transition-all hover:shadow-[0_0_15px_rgba(99,102,241,0.3)] hover:-translate-y-1 ${currentVideo.title === asset.title ? 'border-indigo-500 ring-2 ring-indigo-500/50' : 'border-slate-700 hover:border-indigo-400'}`}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                   </span>{/* Thumbnail Gradient Placeholder */}</p>
+<p class="p1"><span class="Apple-converted-space">                   </span>&lt;div className={`absolute inset-0 opacity-40 ${project.videoThumbnail}`}&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                   </span>&lt;div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all"&gt;&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                   </span></p>
+<p class="p1"><span class="Apple-converted-space">                   </span>{/* Play Icon Overlay */}</p>
+<p class="p1"><span class="Apple-converted-space">                   </span>&lt;div className="absolute inset-0 flex items-center justify-center opacity-60 group-hover:opacity-100 transition-opacity z-10 group-hover:scale-110 duration-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="bg-black/40 rounded-full p-1.5 backdrop-blur-sm border border-white/20"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;Play size={12} fill="currentColor" className="text-white" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                   </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                   </span>{/* Label */}</p>
+<p class="p1"><span class="Apple-converted-space">                   </span>&lt;div className="absolute bottom-0 inset-x-0 p-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;div className="bg-black/70 backdrop-blur-[2px] rounded text-center py-0.5 border-t border-white/5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span className="text-[9px] font-bold text-slate-200 block truncate px-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                          </span>{asset.title}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                   </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">           </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Video Block */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="w-full md:w-[45%]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">         </span>&lt;VideoPlayer<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>title={currentVideo.title}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>videoUrl={currentVideo.url}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>thumbnailClass={project.videoThumbnail}<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>isMain={currentVideo.isMain}</p>
+<p class="p1"><span class="Apple-converted-space">         </span>/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>);</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">const MemberCard = ({ member }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div className="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 rounded-xl p-6 hover:border-indigo-500 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] transition-all duration-300 group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div className="flex items-start justify-between mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="flex items-center gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className={`w-16 h-16 rounded-full ${member.avatarColor} flex items-center justify-center text-white shadow-lg`}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">           </span>&lt;span className="font-bold text-2xl"&gt;{member.name.charAt(0)}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;h3 className="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors"&gt;{member.name}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p className="text-indigo-300 font-medium"&gt;{member.role}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="opacity-50 group-hover:opacity-100 transition-opacity transform group-hover:rotate-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{member.icon}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div className="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h4 className="text-xs font-bold text-slate-500 uppercase mb-2 flex items-center gap-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Zap size={12} /&gt; Specialties</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="flex flex-wrap gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{member.specialties.map(skill =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span key={skill} className="px-2 py-1 bg-indigo-900/40 text-indigo-200 text-xs rounded border border-indigo-500/20"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>{skill}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">      </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h4 className="text-xs font-bold text-slate-500 uppercase mb-2 flex items-center gap-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Award size={12} /&gt; Past Works</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;ul className="text-sm text-slate-300 space-y-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{member.pastWorks.map((work, i) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;li key={i} className="flex items-center gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;span className="w-1.5 h-1.5 bg-indigo-500 rounded-full"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>{work}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/ul&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">);</p>
+<p class="p2"><br></p>
+<p class="p1">export default function App() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [activeTab, setActiveTab] = useState('projects'); // 'projects' or 'team'</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div className="min-h-screen text-slate-200 font-sans selection:bg-indigo-500 selection:text-white bg-cover bg-center bg-no-repeat bg-fixed" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&amp;w=2560&amp;auto=format&amp;fit=crop)'}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Adjusted overlay opacity to 75% (bg-slate-950/75) to ensure text readability on deep space background */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div className="min-h-screen w-full h-full bg-slate-950/75 backdrop-blur-[2px]"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">      </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Header */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;header className="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-md border-b border-white/10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="flex items-center gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center shadow-[0_0_10px_rgba(99,102,241,0.5)]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;Swords className="text-white" size={20} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span className="text-xl font-bold tracking-tighter text-white drop-shadow-md"&gt;Team &lt;span className="text-indigo-400"&gt;Destiny&lt;/span&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;nav className="flex items-center gap-1 bg-black/40 p-1 rounded-lg border border-white/10 backdrop-blur-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>onClick={() =&gt; setActiveTab('projects')}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'projects' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-300 hover:text-white hover:bg-white/5'}`}</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="flex items-center gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;Clock size={14} /&gt; Timeline</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;button<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>onClick={() =&gt; setActiveTab('team')}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'team' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-300 hover:text-white hover:bg-white/5'}`}</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;div className="flex items-center gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;Users size={14} /&gt; Team</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Main Content */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;main className="pt-24 pb-20 px-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div className="max-w-6xl mx-auto"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">          </span></p>
+<p class="p1"><span class="Apple-converted-space">          </span>{/* Hero Section (Small) */}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div className="text-center mb-16 animate-fade-in-down"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;h1 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>{activeTab === 'projects' ? 'We Build Worlds' : 'Meet The Creators'}</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;p className="text-slate-300 max-w-2xl mx-auto drop-shadow-md font-medium"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>{activeTab === 'projects'<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                 </span>? 'Since 2022, we have been dedicated to crafting immersive gaming experiences. Here is our core development journey.'<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                 </span>: 'A group of veteran developers passionate about game creation, gathered here to achieve the extraordinary.'}</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>{activeTab === 'projects' ? (</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div className="relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{/* Vertical Timeline (Middle Line) */}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-1 bg-indigo-900/50 transform md:-translate-x-1/2 rounded-full box-border border-l border-indigo-500/30"&gt;&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="relative z-10 pt-8 pl-6 md:pl-0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{projects.map((project, index) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;ProjectCard key={project.id} project={project} index={index} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>))}</p>
+<p class="p2"><span class="Apple-converted-space">                  </span></p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{/* End Node */}</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="flex justify-center mt-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;div className="bg-black/60 backdrop-blur-md border border-indigo-500/30 text-indigo-300 px-6 py-2 rounded-full text-sm font-mono flex items-center gap-2 shadow-[0_0_15px_rgba(99,102,241,0.2)]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;Ghost size={14} /&gt;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>More to come in 2026...</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>) : (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>{teamMembers.map(member =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;MemberCard key={member.id} member={member} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>))}</p>
+<p class="p2"><span class="Apple-converted-space">               </span></p>
+<p class="p1"><span class="Apple-converted-space">               </span>{/* Recruitment Card */}</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;div className="border-2 border-dashed border-slate-700/50 bg-slate-900/30 backdrop-blur-sm rounded-xl p-6 flex flex-col items-center justify-center text-center hover:border-indigo-500/50 hover:bg-slate-900/50 transition-all cursor-pointer group min-h-[250px]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;ChevronRight className="text-slate-600 group-hover:text-indigo-500" size={32} /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;h3 className="text-xl font-bold text-slate-300 group-hover:text-white"&gt;Join Us&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;p className="text-slate-500 mt-2 text-sm"&gt;We are looking for talented Gameplay Programmers&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">               </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>)}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>{/* Footer */}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;footer className="border-t border-white/10 bg-black/80 backdrop-blur-md py-8 text-center text-slate-500 text-sm relative z-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;© 2025 Team Destiny. All Demo Assets are properties of their respective projects.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/footer&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>);</p>
+<p class="p1">}</p>
+</body>
+</html>
