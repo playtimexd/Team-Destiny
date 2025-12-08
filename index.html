@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Destiny Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Fonts --- */
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-rajdhani { font-family: 'Rajdhani', sans-serif; }
+        /* Fallback for Chinese characters */
+        body { font-family: 'Rajdhani', 'Noto Sans SC', sans-serif; }
+        
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.4); }
+        }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .animate-fade-in { animation: fadeIn 0.5s ease-out; }
+        .animate-fade-up { animation: fadeUp 1s ease-out forwards; }
+        .animate-pulse-glow { animation: pulse-glow 3s infinite; }
+        .animate-spin-slow { animation: spin-slow 8s linear infinite; }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-500 { animation-delay: 0.5s; }
+        
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Selection color */
+        ::selection { background-color: #06b6d4; color: black; }
+
+        /* Utility for view switching */
+        .view-section {
+            transition: opacity 0.5s ease-in-out;
+            width: 100%;
+            min-height: 100vh;
+        }
+        .hidden-view {
+            display: none;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 overflow-x-hidden">
+
+    <!-- Particle Background -->
+    <div class="fixed inset-0 z-[-1] bg-slate-950 overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black opacity-90"></div>
+        <canvas id="particle-canvas" class="absolute inset-0 mix-blend-screen"></canvas>
+        <div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-[1] bg-[length:100%_4px,3px_100%] pointer-events-none"></div>
+    </div>
+
+    <!-- ======================= -->
+    <!-- VIEW 1: LANDING PAGE    -->
+    <!-- ======================= -->
+    <section id="view-landing" class="view-section flex flex-col items-center justify-center relative px-4 h-screen w-full">
+        
+        <!-- Language Switcher (Landing) -->
+        <div class="absolute top-8 right-8 z-50 animate-fade-in delay-500">
+            <button onclick="toggleLanguage()" class="lang-btn px-3 py-1 border border-cyan-500/50 text-cyan-400 text-xs font-bold font-orbitron hover:bg-cyan-500/20 transition-all rounded">
+                CN / EN
+            </button>
+        </div>
+
+        <!-- HUD Corners -->
+        <div class="absolute top-8 left-8 w-16 h-16 border-t-2 border-l-2 border-cyan-500/30 rounded-tl-lg opacity-0 animate-fade-in delay-500"></div>
+        <div class="absolute bottom-8 left-8 w-16 h-16 border-b-2 border-l-2 border-cyan-500/30 rounded-bl-lg opacity-0 animate-fade-in delay-500"></div>
+        <div class="absolute bottom-8 right-8 w-16 h-16 border-b-2 border-r-2 border-cyan-500/30 rounded-br-lg opacity-0 animate-fade-in delay-500"></div>
+
+        <!-- Logo Icon -->
+        <div class="mb-10 opacity-0 animate-fade-up flex justify-center z-10">
+            <div class="relative w-28 h-28 bg-slate-900/50 rounded-full flex items-center justify-center border border-cyan-500/30 backdrop-blur-md animate-pulse-glow group">
+                <div class="absolute inset-0 rounded-full border border-cyan-400 opacity-20 group-hover:scale-110 transition-transform duration-700"></div>
+                <div class="absolute inset-0 rounded-full border-2 border-t-transparent border-cyan-500 opacity-40 animate-spin-slow"></div>
+                <i data-lucide="swords" class="text-cyan-400 w-12 h-12 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]"></i>
+            </div>
+        </div>
+
+        <!-- Text Content -->
+        <div class="text-center max-w-5xl mx-auto z-10">
+            <h1 class="font-orbitron text-5xl md:text-8xl font-black text-white mb-8 tracking-wider opacity-0 animate-fade-up delay-200">
+                TEAM <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-500">DESTINY</span>
+            </h1>
+            
+            <p id="landing-subtitle" class="font-rajdhani text-2xl md:text-3xl text-slate-300 max-w-3xl mx-auto mb-16 font-light leading-relaxed opacity-0 animate-fade-up delay-300">
+                Forging immersive legends & high-fidelity worlds
+                <span class="text-cyan-200 font-medium"></span>
+            </p>
+
+            <!-- Enter Button -->
+            <div class="opacity-0 animate-fade-up delay-500 flex justify-center">
+                <button onclick="enterApp()" class="group relative inline-flex items-center justify-center bg-transparent outline-none cursor-pointer">
+                    <div class="absolute inset-0 bg-cyan-950/30 transform skew-x-[-20deg] border border-cyan-500/30 group-hover:bg-cyan-900/50 group-hover:border-cyan-400 transition-all duration-300 shadow-[0_0_20px_rgba(0,255,255,0.1)] group-hover:shadow-[0_0_30px_rgba(0,255,255,0.3)]"></div>
+                    <div class="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-cyan-500/50 -translate-x-1 -translate-y-1 group-hover:border-cyan-400 transition-colors"></div>
+                    <div class="absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 border-cyan-500/50 translate-x-1 translate-y-1 group-hover:border-cyan-400 transition-colors"></div>
+
+                    <div class="relative flex items-center gap-6 px-12 py-5 z-10">
+                        <div class="text-left">
+                            <div id="landing-enter" class="font-orbitron font-bold text-xl text-white tracking-widest group-hover:text-cyan-300 transition-colors">ENTER</div>
+                        </div>
+                        <div class="h-8 w-px bg-cyan-800 group-hover:bg-cyan-400 transition-colors"></div>
+                        <i data-lucide="cpu" class="w-8 h-8 text-cyan-500 group-hover:text-white group-hover:rotate-90 transition-all duration-500"></i>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 w-full text-center z-10 flex flex-col items-center opacity-60">
+            <div id="landing-footer" class="font-orbitron text-[10px] text-cyan-600 tracking-[0.3em] uppercase mb-2 animate-pulse">
+                Connect • QC • CA
+            </div>
+            <div class="w-32 h-1 bg-gradient-to-r from-transparent via-cyan-900 to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- ======================= -->
+    <!-- VIEW 2: MAIN APP        -->
+    <!-- ======================= -->
+    <section id="view-app" class="view-section hidden-view relative z-10">
+        
+        <!-- Header -->
+        <header class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-cyan-500/20">
+            <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+                <button onclick="showLanding()" class="flex items-center gap-2 hover:opacity-80 transition-opacity group">
+                    <div class="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center shadow-[0_0_10px_rgba(99,102,241,0.5)] group-hover:shadow-[0_0_15px_rgba(0,255,255,0.8)] transition-all">
+                        <i data-lucide="swords" class="text-white w-5 h-5"></i>
+                    </div>
+                    <span class="font-orbitron text-xl font-bold tracking-tighter text-white drop-shadow-md">Team <span class="text-cyan-400">Destiny</span></span>
+                </button>
+
+                <div class="flex items-center gap-4">
+                    <nav class="flex items-center gap-1 bg-black/40 p-1 rounded-lg border border-white/10 backdrop-blur-sm">
+                        <button id="tab-projects-btn" onclick="switchTab('projects')" class="px-4 py-1.5 rounded-md text-sm font-medium font-rajdhani font-bold tracking-wide transition-all bg-indigo-600 text-white shadow-lg flex items-center gap-2">
+                            <i data-lucide="clock" class="w-3.5 h-3.5"></i> <span class="t-projects">Our Projects</span>
+                        </button>
+                        <button id="tab-team-btn" onclick="switchTab('team')" class="px-4 py-1.5 rounded-md text-sm font-medium font-rajdhani font-bold tracking-wide transition-all text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2">
+                            <i data-lucide="users" class="w-3.5 h-3.5"></i> <span class="t-team">Team</span>
+                        </button>
+                    </nav>
+                    
+                    <button onclick="toggleLanguage()" class="lang-btn px-3 py-1.5 border border-cyan-500/30 text-cyan-400 text-xs font-bold font-orbitron hover:bg-cyan-500/10 transition-all rounded bg-black/40 backdrop-blur-sm">
+                        CN / EN
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="pt-24 pb-8 px-4 min-h-screen">
+            <div class="max-w-6xl mx-auto">
+                
+                <!-- Hero Text -->
+                <div class="text-center mb-16 animate-fade-in">
+                    <h1 id="page-title" class="font-orbitron text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-[0_0_15px_rgba(0,255,255,0.3)]">
+                        Our Past Projects
+                    </h1>
+                    <p id="page-desc" class="font-rajdhani text-xl text-slate-300 max-w-2xl mx-auto drop-shadow-md font-medium">
+                        Since 2022, we have been dedicated to crafting immersive gaming experiences. Here is our core development journey.
+                    </p>
+                </div>
+
+                <!-- Projects Tab Content -->
+                <div id="tab-projects-content" class="relative">
+                    <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-cyan-900/50 transform md:-translate-x-1/2 shadow-[0_0_10px_rgba(0,255,255,0.2)]"></div>
+                    
+                    <div id="projects-list" class="relative z-10 pt-8 pl-6 md:pl-0">
+                        <!-- Javascript will inject projects here -->
+                    </div>
+                    
+                    <div class="flex flex-col items-center justify-center mt-12 mb-8 gap-4">
+                        <button onclick="switchTab('team')" class="bg-black/60 backdrop-blur-md border border-cyan-500/30 text-cyan-300 px-12 py-4 rounded-full text-2xl font-mono flex items-center gap-4 shadow-[0_0_15px_rgba(0,255,255,0.2)] hover:bg-cyan-900/50 hover:border-cyan-400 hover:text-white transition-all cursor-pointer group">
+                            <i data-lucide="users" class="w-7 h-7 group-hover:scale-110 transition-transform"></i> 
+                            <span class="t-team-portfolio">Our Team</span>
+                        </button>
+                        <p class="t-footer text-slate-500 text-xs font-rajdhani opacity-70">© 2025 Team Destiny. All Demo Assets are properties of their respective projects.</p>
+                    </div>
+                </div>
+
+                <!-- Team Tab Content -->
+                <div id="tab-team-content" class="hidden-view">
+                    <!-- Javascript will inject grouped team sections here -->
+                    <div id="team-sections-container"></div>
+                    
+                    <div class="flex flex-col items-center justify-center mt-12 mb-4">
+                         <p class="t-footer text-slate-500 text-xs font-rajdhani opacity-70">© 2025 Team Destiny. All Demo Assets are properties of their respective projects.</p>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+        
+        <!-- Global Footer removed to prevent duplication and layout spacing issues -->
+    </section>
+
+    <!-- Script Logic -->
+    <script>
+        // --- DATA ---
+        let currentLang = 'en';
+
+        const TRANSLATIONS = {
+            en: {
+                landingSubtitle: `Forging immersive legends & high-fidelity worlds`,
+                landingEnter: "ENTER",
+                landingFooter: "Connect • QC • CA",
+                navProjects: "Our Projects",
+                navTeam: "Team",
+                projectsTitle: "Our Past Projects",
+                projectsDesc: "Since 2022, we have been dedicated to crafting immersive gaming experiences. Here is our core development journey.",
+                teamTitle: "Meet the Core Team",
+                teamDesc: "A group of veteran developers passionate about game creation, gathered here to achieve the extraordinary.",
+                backToMain: "Back to Main",
+                moreVideos: "More Video Showcases",
+                teamPortfolio: "Our Team",
+                noVideo: "No video link available",
+                specialties: "Specialties",
+                // MODIFIED: Past Works -> 过往项目
+                pastWorks: "Past Works", 
+                footer: "© 2025 Team Destiny. All Demo Assets are properties of their respective projects."
+            },
+            zh: {
+                landingSubtitle: `打造沉浸式传奇与高保真世界`,
+                landingEnter: "进入",
+                landingFooter: "连接 • 品控 • 加拿大",
+                navProjects: "项目展示",
+                navTeam: "核心团队",
+                projectsTitle: "往期项目",
+                projectsDesc: "自2022年起，我要致力于打造沉浸式游戏体验。这是我们的核心开发历程。",
+                teamTitle: "认识核心团队",
+                teamDesc: "一群热衷于游戏创作的资深开发者，汇聚于此，共创非凡。",
+                backToMain: "返回主视频",
+                moreVideos: "更多视频展示",
+                teamPortfolio: "我们的团队",
+                noVideo: "暂无视频链接",
+                specialties: "专长",
+                // MODIFIED: 参与项目 -> 过往项目
+                pastWorks: "过往项目", 
+                footer: "© 2025 Team Destiny. 演示资产版权归各项目所有。"
+            }
+        };
+
+        const PROJECTS_DATA = [
+            {
+                id: 1,
+                period: "2022.01 - 2023.5",
+                title_en: "Project Invictus",
+                title_zh: "代号 Invictus",
+                genre_en: "Action RPG",
+                genre_zh: "动作角色扮演",
+                description_en: "The thrilling adventure of the GhostPunks, young heroes with spirit animals in the near-future New Golden City. They protect their world from The Fallow's monsters while navigating self-discovery, loyalty, and hidden agendas.",
+                description_zh: "GhostPunks 的惊险冒险。在近未来的新黄金城，年轻的英雄们与他们的守护灵兽并肩作战。他们在探索自我、考验忠诚与揭开阴谋的同时，保护世界免受“荒芜”怪物的侵害。",
+                tags_en: ["UE5", "Cyberpunk", "Open World"],
+                tags_zh: ["UE5", "赛博朋克", "开放世界"],
+                videoThumbnail: "bg-gradient-to-br from-red-900 to-slate-800",
+                mainVideoUrl: "", 
+                assets: [
+                    { title_en: "Game Art", title_zh: "游戏美术", videoUrl: "" },
+                    { title_en: "Game Concept", title_zh: "游戏概念", videoUrl: "" }
+                ]
+            },
+            {
+                id: 2,
+                period: "2023.5 - 2024.12",
+                title_en: "Project Athena",
+                title_zh: "代号 Athena",
+                genre_en: "Action RPG",
+                genre_zh: "动作角色扮演",
+                description_en: "The ultimate mythological fantasy live-service ARPG. Lead a squad of rebel demigods—from Greek, Nordic, Chinese, and Egyptian legends—against corrupt ancient gods. Features deep elemental combat synergies, 'Magical Realism' visuals, and intense cooperative dungeon crawling.",
+                description_zh: "终极神话幻想服务型 ARPG。率领一支由希腊、北欧、中国和埃及传说中的叛逆半神组成的小队，对抗腐败的古神。具有深度的元素战斗协同、“魔幻现实主义”视觉效果以及紧张刺激的合作地下城探索。",
+                tags_en: ["UE5", "GaaS", "Open World", "Co-op"],
+                tags_zh: ["UE5", "服务型游戏", "开放世界", "合作"],
+                videoThumbnail: "bg-gradient-to-br from-blue-900 to-slate-800",
+                mainVideoUrl: "", 
+                assets: [
+                    { title_en: "Multicharacter Coop", title_zh: "多角色合作", videoUrl: "" },
+                    { title_en: "Tech Showcase", title_zh: "技术展示", videoUrl: "" },
+                    { title_en: "Character Showcase", videoUrl: "" }
+                ]
+            },
+            {
+                id: 3,
+                period: "2025.1 - 2025.3",
+                title_en: "Project AC HD",
+                title_zh: "代号 AC HD",
+                genre_en: "Assassin's Creed",
+                genre_zh: "刺客信条",
+                description_en: "A 'Chinese Assassin's Creed' set during the Qin and Han Dynasties. A hardcore ARPG focused on PVE experiences, recreating the legend of Eastern assassins against a magnificent historical backdrop.",
+                description_zh: "设定在秦汉时期的“中国版刺客信条”。一款专注于 PVE 体验的硬核 ARPG，在宏伟的历史背景下重现东方刺客的传奇。",
+                tags_en: ["China", "PVE", "ARPG", "PVP"],
+                tags_zh: ["中国", "PVE", "ARPG", "PVP"],
+                videoThumbnail: "bg-gradient-to-br from-amber-700 to-slate-800",
+                mainVideoUrl: "",
+                assets: [
+                    { title_en: "Art Showcase", title_zh: "美术展示", videoUrl: "" }
+                ]
+            },
+            {
+                id: 4,
+                period: "2025.4 - 2025.9",
+                title_en: "A Chinese Ghost Story PVE",
+                title_zh: "倩女幽魂 PVE",
+                genre_en: "Oriental Fantasy PVE",
+                genre_zh: "东方玄幻 PVE",
+                description_en: "Development of the PVE mode for 'A Chinese Ghost Story'. Constructed dungeon mechanics and Boss fight designs rich in Oriental charm.",
+                description_zh: "《倩女幽魂》PVE 模式开发。构建了富含东方韵味的地下城机制和 Boss 战设计。",
+                tags_en: ["Originality", "Boss Fight", "Live-ops"],
+                tags_zh: ["原创性", "Boss 战", "长线运营"],
+                videoThumbnail: "bg-gradient-to-br from-emerald-900 to-slate-800",
+                mainVideoUrl: "",
+                assets: [
+                    { title_en: "Art Showcase", title_zh: "美术展示", videoUrl: "" }
+                ]
+            },
+            {
+                id: 5,
+                period: "2025.9 - 2025.11",
+                title_en: "CGS 4v1 PVP",
+                title_zh: "倩女幽魂 4v1 PVP",
+                genre_en: "Asymetric",
+                genre_zh: "非对称对抗",
+                description_en: "A lightweight asymmetric survival horror game based on the 'Strange Stories from the Liaozhai universe. Blending Chinese folk horror aesthetics, players experience thrilling psychological mind games between exorcists and demons in an eerie atmosphere.",
+                description_zh: "基于聊斋宇宙的轻量级非对称生存恐怖游戏。融合中式民俗恐怖美学，玩家将在诡异的氛围中体验驱魔人与恶灵之间惊心动魄的心理博弈。",
+                tags_en: ["Liaozhai Theme", "Chinese Horror", "4v1"],
+                tags_zh: ["聊斋题材", "中式恐怖", "4v1"],
+                videoThumbnail: "bg-gradient-to-br from-purple-900 to-slate-900",
+                mainVideoUrl: "",
+                assets: [
+                    { title_en: "Character Benchmark", title_zh: "角色标杆", videoUrl: "" },
+                    { title_en: "Environment Art", title_zh: "环境美术", videoUrl: "" },
+                    { title_en: "AI Concept Video", videoUrl: "" }
+                ]
+            }
+        ];
+
+        const TEAM_DATA = [
+            { id: 1, name: "Marc-Antoine Pietri", role_en: "Game Director", role_zh: "游戏总监", 
+              specialties_en: [
+                "Fight System and Fight 3Cs", "Fight Behavior and AI for Enemies and Bosses",
+                "Game Progression (Abilities, Weapons and Stats)", 
+                "Eagle, Tool and Entities Properties (Fire, Destructibles)"
+              ], 
+              specialties_zh: [
+                "战斗系统与战斗 3C (角色/镜头/操控)", "敌人与 Boss 战斗行为及 AI",
+                "游戏进程设计 (能力、武器和属性)", 
+                "鹰眼、工具和实体属性 (火焰、可破坏物)"
+              ], 
+              pastWorks: ["Assassin's Creed Valhalla", "Assassin's Creed Origins", "Assassin's Creed IV Black Flag"], 
+              icon: "crown", iconColor: "text-yellow-400", avatarColor: "bg-yellow-600" },
+
+            { id: 18, name: "Ash Ismail", role_en: "Creative Director", role_zh: "创意总监", 
+              specialties_en: ["Expertise in creative direction", "gameplay experiences", "game mechanics & systems", "narrative and UX"], 
+              specialties_zh: ["创意指导专业知识", "游戏体验", "游戏机制与系统", "叙事与用户体验"], 
+              pastWorks: ["Assassin’s Creed Valhalla", "Assassin’s Creed Origins", "Assassin's Creed IV Black Flag"], 
+              icon: "crown", iconColor: "text-yellow-400", avatarColor: "bg-yellow-600" }, // New Member Added
+
+            { id: 2, name: "Donglu Yu", role_en: "Art Director", role_zh: "美术总监", 
+              specialties_en: ["Visual Direction", "Concept Art", "World Building", "Illustration", "Digital Painting", "Visual Development"], 
+              specialties_zh: ["视觉导向", "概念艺术", "世界构建", "插画", "数字绘画", "视觉开发"], 
+              pastWorks: ["Delta Force", "Assault Fire", "Assassin's Creed Valhalla", "Far Cry 4", "Assassin's Creed IV: Black Flag", "Assassin's Creed III", "Assassin's Creed Brotherhood", "Assassin's Creed Project Legacy"], 
+              icon: "paintbrush", iconColor: "text-pink-400", avatarColor: "bg-pink-600" },
+
+            { id: 3, name: "Yanwei Wu", role_en: "Art/Outsourcing Producer", role_zh: "美术/外包制作人", // Modified Role Title
+              specialties_en: [
+                "External Development & Co-Dev Strategy", "Art Production & Asset Pipeline Management", 
+                "Budget Forecasting & Cost Control", "Vendor Management & Contract Negotiation",
+                "AAA Game Development & Production"
+              ], 
+              pastWorks: ["Assassin’s Creed Origins", "Assassin’s Creed Unity", "Farcry Brand", "Assassin’s Creed Brotherhood", "Rainbow Six Vegas", "Splint Cell"], 
+              icon: "zap", iconColor: "text-amber-400", avatarColor: "bg-amber-600" },
+
+            { id: 4, name: "Nicolas Jaujou", role_en: "Lead Game Designer", role_zh: "首席游戏策划", 
+              specialties_en: ["Gameplay Mechanics", "System Design", "Player Experience", "Open world", "Mission system"], 
+              pastWorks: ["Rainbow Six Extraction", "Far Cry 6", "Far Cry 5", "Assassin's Creed Initiates"], 
+              icon: "gamepad-2", iconColor: "text-indigo-400", avatarColor: "bg-indigo-600" },
+              
+            { id: 6, name: "Ales Rajar", role_en: "Lead Level Designer", role_zh: "首席关卡策划", specialties_en: ["Level Architecture", "Pacing", "Environmental Storytelling"], specialties_zh: ["关卡架构", "节奏控制", "环境叙事"], pastWorks: ["Assassin’s Creed Valhalla", "Assassin’s Creed Origins", "Assassin's Creed IV Black Flag"], icon: "map", iconColor: "text-emerald-400", avatarColor: "bg-emerald-600" },
+            
+            { id: 19, name: "Marc Desfosses", role_en: "Technical Director", role_zh: "技术总监", 
+              specialties_en: [
+                "3D", "Engine", "Tools", "Network", "Automation",
+                "Technical Architecture", "Pipeline Optimization"
+              ], 
+              pastWorks: ["Rainbow Six Extraction", "Assassin's Creed Unity", "Assassin's Creed IV Black Flag", "Assassin's Creed II", "Rainbow Six Patriots", "Prince of Persia: Warrior Within", "Prince of Persia : Sands of Time"], 
+              icon: "wrench", iconColor: "text-violet-400", avatarColor: "bg-violet-600" },
+
+            { id: 7, name: "Allan Lau", role_en: "Senior Lead Gameplay Engineer", role_zh: "高级首席玩法程序", 
+              specialties_en: ["C++", "Game Mechanics", "Systems Architecture", "Fight", "3Cs", "Missions", "Core AI"], 
+              pastWorks: ["Assassin's Creed Valhalla", "Assassin's Creed Odyssey", "Assassin's Creed Origins", "Assassin's Creed Unity", "Assassin's Creed IV: Black Flag", "Assassin's Creed III", "Assassin's Creed: Revelations", "Assassin's Creed: Brotherhood - The Da Vinci Disappearance", "Assassin's Creed: Brotherhood", "Assassin's Creed II"], 
+              icon: "code", iconColor: "text-blue-400", avatarColor: "bg-blue-600" },
+              
+            { id: 8, name: "David Bolle", role_en: "Lead Quest Designer", role_zh: "首席任务策划", 
+              specialties_en: [
+                "Open-World Quest Architecture", "Feature & System Ownership", 
+                "Pre-Production Prototyping", "Scripted Cinematic Set-Pieces",
+                "Narrative-Driven Mission Design"
+              ], 
+              pastWorks: ["Assassin's Creed Valhalla", "Assassin's Creed Origins", "Assassin's Creed Black Flag"], 
+              icon: "map-pin", iconColor: "text-teal-400", avatarColor: "bg-teal-600" },
+              
+            { id: 9, name: "Greg Rassam", role_en: "Principal 3D Artist", role_zh: "首席 3D 美术", 
+              specialties_en: [
+                "High-Resolution Mechanical Modeling", "Weapons Art Production", 
+                "Material & Texture Fidelity", "Tech Art Tool Creation", 
+                "Asset Pipeline", "Lightning", "VFX"
+              ], 
+              pastWorks: ["FarCry 6", "FarCry 5", "FarCry 4", "FarCry 3", "Avatar The Game", "Rainbow Six Vegas 2"], 
+              icon: "box", iconColor: "text-orange-400", avatarColor: "bg-orange-600" },
+              
+            { id: 10, name: "Nicolas Novali", role_en: "Principal Level Artist", role_zh: "首席关卡美术", 
+              specialties_en: [
+                "Strong Artistic Composition & Visual Design", "3D Concept & Iterative Modeling", 
+                "Real-Time Engine Expertise (Unreal / Frostbite / CryEngine)", 
+                "High-End Rendering & Lighting"
+              ], 
+              pastWorks: ["Gotham Knights", "Ancestors : The Humankind Odyssey", "Star Wars Battlefront II", "Mass Effect Andromeda", "Star Citizen (PC)", "Assassin's Creed III", "Assassin's Creed IV - Black Flag", "Remember Me"], 
+              icon: "image", iconColor: "text-cyan-400", avatarColor: "bg-cyan-600" },
+            
+            { id: 11, name: "Martin Oung", role_en: "Principal 3D Artist", role_zh: "首席 3D 美术", specialties_en: ["3D Sculpting", "Hard Surface", "Prop Design"], specialties_zh: ["3D 雕刻", "硬表面", "道具设计"], 
+              pastWorks: ["For Honor", "Watchdog", "FarCry 3", "Splinter Cell : Conviction", "Shaun White Snowboarding", "Tom Clancy's Rainbow Six: Vegas 2"], 
+              icon: "box-select", iconColor: "text-rose-400", avatarColor: "bg-rose-600" },
+              
+            { id: 12, name: "Mike Fudge", role_en: "Principal Character Artist", role_zh: "首席角色美术", 
+              specialties_en: [
+                "ZBrush, Maya, Photoshop", 
+                "Organic and hard surface modeling, lighting, rendering, texturing, hair, real time shaders, R&D, systems and pipeline development",
+                "Illustration, Clay and Metal Sculpture"
+              ], 
+              pastWorks: ["Immortals of Aveum", "Mafia III", "Metal Gear Solid 5", "Brutal Legend", "Tomb Raider Underworld", "The Matrix Revolutions"], 
+              icon: "user", iconColor: "text-fuchsia-400", avatarColor: "bg-fuchsia-600" },
+            
+            { id: 20, name: "Simon Clavet", role_en: "Principal Animation Programmer", role_zh: "首席动画程序工程师", 
+              specialties_en: [
+                "Motion Matching (Algorithm Development)", "Procedural Animation", 
+                "Physics-Based Character Control (Neural Networks)", "Realistic & Fluid Character Movement", 
+                "Gameplay/Animation UX (Fun & Easy Control)"
+              ], 
+              pastWorks: ["For Honor", "Assassin's Creed III", "Far Cry 3", "Splinter Cell: Conviction", "Avatar", "Shaun White Snowboarding"], 
+              icon: "activity", iconColor: "text-lime-400", avatarColor: "bg-lime-600" },
+            
+
+            { id: 14, name: "Adrian Leblanc", role_en: "Senior Gameplay Animator", role_zh: "高级玩法动画师", 
+              specialties_en: ["Combat Animation", "Locomotion", "Mocap Cleanup", "Mocap Acting"], 
+              pastWorks: ["Gotham Knights", "Middle-earth: Shadow of War", "Injustice 2", "Mad Max", "Batman: Arkham Origins"], 
+              icon: "move", iconColor: "text-sky-400", avatarColor: "bg-sky-600" },
+            
+            { id: 15, name: "Andrew Zhang", role_en: "AI Project Manager/Producer", role_zh: "AI 项目经理/制作人", 
+              specialties_en: ["AI Development", "Agile Management", "Production", "AI+Game", "PMP", "AI Conception"], // Added AI Conception
+              specialties_zh: ["AI 开发", "敏捷管理", "生产流程", "AI+游戏", "PMP", "AI 概念设计"], // Added AI 概念设计
+              pastWorks: ["AI Systems", "AI+Game production pipeline"], 
+              icon: "cpu", iconColor: "text-violet-400", avatarColor: "bg-violet-600" },
+
+            { id: 16, name: "Frankie Peng", role_en: "Senior Narrative Designer", role_zh: "高级叙事策划", 
+              specialties_en: [
+                "Interactive Cinematic Design", "Narrative Design", 
+                "Cinematography for Games", "Environmental Storytelling",
+                "Character Emotion Design"
+              ], 
+              pastWorks: ["Road To Empress", "Delta Force campaign mode", "The Invisible Guardian"], 
+              icon: "book-open", iconColor: "text-red-400", avatarColor: "bg-red-600" },
+              
+            { id: 17, name: "Hans Park", role_en: "Senior Environment Concept Artist", role_zh: "高级环境概念美术", 
+              specialties_en: [
+                "Environment Concept Design", "World-Building & Pre-Production Development", 
+                "Cross-Genre Visual Development"
+              ], 
+              pastWorks: ["Kingdom", "Eternights", "Dune", "Ghost of Yotei", "Ghost of Tsushima", "Days Gone"], 
+              icon: "pen-tool", iconColor: "text-pink-400", avatarColor: "bg-pink-500" }
+        ];
+
+        // --- STATE ---
+        // Store video player state for each project
+        const projectStates = {};
+        PROJECTS_DATA.forEach(p => {
+            projectStates[p.id] = {
+                currentUrl: p.mainVideoUrl,
+                currentTitle: p.title_en,
+                isMain: true,
+                isPlaying: false
+            };
+        });
+
+        // --- INIT ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initParticles();
+            renderContent();
+            lucide.createIcons();
+        });
+
+        // --- FUNCTIONS ---
+        
+        // Language Toggle
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            renderContent();
+        }
+
+        function renderContent() {
+            // Update Static Text
+            const t = TRANSLATIONS[currentLang];
+            document.getElementById('landing-subtitle').innerHTML = t.landingSubtitle;
+            document.getElementById('landing-enter').innerText = t.landingEnter;
+            document.getElementById('landing-footer').innerText = t.landingFooter;
+            
+            document.querySelector('.t-projects').innerText = t.navProjects;
+            document.querySelector('.t-team').innerText = t.navTeam;
+            document.querySelector('.t-team-portfolio').innerText = t.teamPortfolio;
+            
+            // Update all footer instances
+            document.querySelectorAll('.t-footer').forEach(el => {
+                el.innerText = t.footer;
+            });
+
+            // Update Tab Content if active
+            const activeTab = document.getElementById('tab-projects-content').classList.contains('hidden-view') ? 'team' : 'projects';
+            switchTab(activeTab, false); // Don't force scroll on re-render
+
+            // Re-render Lists to update translated content inside
+            renderProjects();
+            renderTeam();
+            lucide.createIcons();
+        }
+
+        // View Navigation
+        function enterApp() {
+            document.getElementById('view-landing').style.display = 'none';
+            document.getElementById('view-app').style.display = 'block';
+            document.getElementById('view-app').classList.remove('hidden-view');
+            document.body.style.overflow = 'auto';
+            switchTab('projects', true); // Scroll to top when entering
+        }
+
+        function showLanding() {
+            document.getElementById('view-app').style.display = 'none';
+            document.getElementById('view-landing').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Tab Switching
+        function switchTab(tab, shouldScroll = true) {
+            const projectsBtn = document.getElementById('tab-projects-btn');
+            const teamBtn = document.getElementById('tab-team-btn');
+            const projectsContent = document.getElementById('tab-projects-content');
+            const teamContent = document.getElementById('tab-team-content');
+            const pageTitle = document.getElementById('page-title');
+            const pageDesc = document.getElementById('page-desc');
+            const t = TRANSLATIONS[currentLang];
+
+            if (tab === 'projects') {
+                // Style Buttons
+                projectsBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium font-rajdhani font-bold tracking-wide transition-all bg-indigo-600 text-white shadow-lg flex items-center gap-2";
+                teamBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium font-rajdhani font-bold tracking-wide transition-all text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2";
+                
+                // Show Content
+                projectsContent.classList.remove('hidden-view');
+                teamContent.classList.add('hidden-view');
+                
+                // Update Text
+                pageTitle.innerText = t.projectsTitle;
+                pageDesc.innerText = t.projectsDesc;
+            } else {
+                // Style Buttons
+                teamBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium font-rajdhani font-bold tracking-wide transition-all bg-indigo-600 text-white shadow-lg flex items-center gap-2";
+                projectsBtn.className = "px-4 py-1.5 rounded-md text-sm font-medium font-rajdhani font-bold tracking-wide transition-all text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-2";
+                
+                // Show Content
+                teamContent.classList.remove('hidden-view');
+                projectsContent.classList.add('hidden-view');
+
+                // Update Text
+                pageTitle.innerText = t.teamTitle;
+                pageDesc.innerText = t.teamDesc;
+            }
+
+            // Scroll to top of the main content area (below the fixed header)
+            if (shouldScroll) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Render Projects
+        function renderProjects() {
+            const container = document.getElementById('projects-list');
+            const t = TRANSLATIONS[currentLang];
+            let html = '';
+
+            // 1. Reverse the project data order before iterating
+            const reversedProjects = [...PROJECTS_DATA].reverse();
+
+            reversedProjects.forEach((project, index) => {
+                const isLeft = index % 2 === 0;
+                // If last item (which is now the oldest project in the reversed list), use mb-0
+                const isLast = index === reversedProjects.length - 1; 
+                const marginClass = isLast ? 'mb-0' : 'mb-16 md:mb-24';
+                
+                // Get localized content
+                const title = currentLang === 'en' ? project.title_en : project.title_zh;
+                const genre = currentLang === 'en' ? project.genre_en : project.genre_zh;
+                const desc = currentLang === 'en' ? project.description_en : project.description_zh;
+                const tags = currentLang === 'en' ? project.tags_en : project.tags_zh;
+
+                // Generate Tags HTML
+                const tagsHtml = tags.map(tag => 
+                    `<span class="px-2 py-0.5 bg-slate-900/80 text-indigo-300 text-xs rounded border border-indigo-700/50 font-rajdhani">${tag}</span>`
+                ).join('');
+
+                // Generate Assets Buttons HTML (Initial Render)
+                const assetsHtml = renderAssetsButtons(project, isLeft);
+                
+                // Generate Player HTML (Initial Render)
+                const playerHtml = renderPlayer(project);
+
+                html += `
+                <div class="flex flex-col md:flex-row items-center justify-between w-full ${marginClass} relative ${isLeft ? 'md:flex-row-reverse' : ''} animate-fade-in">
+                    
+                    <!-- Timeline Node -->
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-4 border-indigo-500 items-center justify-center z-10 shadow-[0_0_15px_rgba(99,102,241,0.5)]">
+                         <div class="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+
+                    <!-- Info Section -->
+                    <div class="w-full md:w-[45%] ${isLeft ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'} mb-8 md:mb-0">
+                         <div class="inline-block px-3 py-1 rounded-full text-sm font-mono font-bold mb-2 ${isLeft ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-indigo-600 to-transparent text-white border border-indigo-400/30 font-rajdhani">
+                            ${project.period}
+                         </div>
+                         <h2 class="font-orbitron text-2xl md:text-4xl font-extrabold text-white mb-2 tracking-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+                            ${title}
+                         </h2>
+                         <div class="flex flex-wrap gap-2 mb-4 ${isLeft ? 'md:justify-end' : 'md:justify-start'}">
+                            <span class="px-2 py-0.5 bg-slate-900/80 text-cyan-200 text-xs rounded border border-cyan-700/50 font-rajdhani font-semibold">${genre}</span>
+                            ${tagsHtml}
+                         </div>
+                         <p class="font-rajdhani text-lg text-slate-300 leading-relaxed mb-6 font-medium drop-shadow-md bg-black/40 backdrop-blur-sm p-3 rounded border-l-2 border-indigo-500/30">
+                            ${desc}
+                         </p>
+
+                         <!-- Asset Selector -->
+                         <div class="space-y-3 ${isLeft ? 'items-end' : 'items-start'} flex flex-col w-full">
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2 bg-black/30 px-2 py-1 rounded font-orbitron">
+                              <i data-lucide="film" class="w-3 h-3"></i> ${t.moreVideos}
+                            </h4>
+                            <div id="assets-container-${project.id}" class="flex flex-wrap gap-3 ${isLeft ? 'justify-end' : 'justify-start'}">
+                                ${assetsHtml}
+                            </div>
+                         </div>
+                    </div>
+
+                    <!-- Player Section -->
+                    <div class="w-full md:w-[45%]">
+                        <div id="player-container-${project.id}">
+                            ${playerHtml}
+                        </div>
+                    </div>
+                </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Helper: Render Asset Buttons
+        function renderAssetsButtons(project, isLeft) {
+            const state = projectStates[project.id];
+            const t = TRANSLATIONS[currentLang];
+            let html = '';
+
+            // "Back to Main" Button
+            if (!state.isMain) {
+                html += `
+                <button onclick="handleSelectVideo(${project.id}, '${project.mainVideoUrl}', '${state.currentTitle}', true)"
+                    class="group relative cursor-pointer overflow-hidden rounded-lg border border-indigo-500 w-28 h-16 bg-slate-800 hover:bg-slate-700 transition-all flex items-center justify-center">
+                    <span class="text-[10px] font-bold text-indigo-300 font-rajdhani uppercase">${t.backToMain}</span>
+                </button>`;
+            }
+
+            project.assets.forEach(asset => {
+                const assetTitle = currentLang === 'en' ? asset.title_en : asset.title_zh;
+                const isSelected = state.currentTitle === assetTitle;
+                const borderClass = isSelected ? 'border-cyan-400 ring-1 ring-cyan-400/50 shadow-[0_0_10px_rgba(0,255,255,0.4)]' : 'border-slate-700 hover:border-indigo-400';
+                
+                html += `
+                <button onclick="handleSelectVideo(${project.id}, '${asset.videoUrl}', '${assetTitle}', false)"
+                    class="group relative cursor-pointer overflow-hidden rounded-lg border w-28 h-16 bg-slate-800 transition-all hover:shadow-[0_0_15px_rgba(99,102,241,0.3)] hover:-translate-y-1 ${borderClass}">
+                    <div class="absolute inset-0 opacity-40 ${project.videoThumbnail}"></div>
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-60 group-hover:opacity-100 transition-opacity z-10 group-hover:scale-110 duration-200">
+                        <div class="bg-black/40 rounded-full p-1.5 backdrop-blur-sm border border-white/20">
+                            <i data-lucide="play" class="w-3 h-3 text-white fill-current"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 inset-x-0 p-1">
+                        <div class="bg-black/70 backdrop-blur-[2px] rounded text-center py-0.5 border-t border-white/5">
+                            <span class="text-[9px] font-bold text-slate-200 block truncate px-1 font-rajdhani">${assetTitle}</span>
+                        </div>
+                    </div>
+                </button>`;
+            });
+            return html;
+        }
+
+        // Helper: Render Player Area
+        function renderPlayer(project) {
+            const state = projectStates[project.id];
+            const t = TRANSLATIONS[currentLang];
+            const currentTitleDisplay = state.isMain ? 
+                (currentLang === 'en' ? project.title_en + ' Main Trailer' : project.title_zh + ' 主视频') 
+                : state.currentTitle;
+
+            if (state.isPlaying && state.currentUrl) {
+                const src = state.currentUrl.includes('?') ? `${state.currentUrl}&autoplay=1` : `${state.currentUrl}?autoplay=1`;
+                return `
+                <div class="relative w-full aspect-video rounded-lg overflow-hidden border border-slate-700 shadow-xl group bg-black/80 backdrop-blur-sm">
+                    <iframe class="w-full h-full animate-fade-in" src="${src}" title="${currentTitleDisplay}" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                </div>`;
+            } else {
+                const playBtn = state.currentUrl 
+                    ? `<button onclick="handlePlay(${project.id})" class="bg-white/10 hover:bg-indigo-500 text-white rounded-full p-4 backdrop-blur-sm border border-white/20 transition-all transform hover:scale-110 shadow-[0_0_20px_rgba(99,102,241,0.5)]"><i data-lucide="play" class="w-8 h-8 fill-current"></i></button>`
+                    : `<p class="text-slate-400 text-sm bg-black/50 px-3 py-1 rounded border border-white/10 font-rajdhani">${t.noVideo}</p>`;
+
+                return `
+                <div class="relative w-full aspect-video rounded-lg overflow-hidden border border-slate-700 shadow-xl group bg-black/80 backdrop-blur-sm transition-all duration-500 hover:border-cyan-500/50">
+                    <div class="w-full h-full ${project.videoThumbnail} flex items-center justify-center transition-all duration-500 group-hover:opacity-90 relative">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all"></div>
+                        <div class="absolute inset-0 opacity-30 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')]"></div>
+                        <div class="z-10 text-center px-4">
+                            <h3 class="font-orbitron text-white font-bold text-xl mb-4 drop-shadow-md tracking-wider">
+                                ${currentTitleDisplay}
+                            </h3>
+                            ${playBtn}
+                        </div>
+                    </div>
+                </div>`;
+            }
+        }
+
+        // Logic: Select Video
+        function handleSelectVideo(projectId, url, title, isMain) {
+            projectStates[projectId].currentUrl = url;
+            projectStates[projectId].currentTitle = title;
+            projectStates[projectId].isMain = isMain;
+            projectStates[projectId].isPlaying = false; // Stop playing on switch
+            
+            // Re-render only this project's components
+            const project = PROJECTS_DATA.find(p => p.id === projectId);
+            const index = PROJECTS_DATA.indexOf(project);
+            const isLeft = index % 2 === 0;
+
+            document.getElementById(`assets-container-${projectId}`).innerHTML = renderAssetsButtons(project, isLeft);
+            document.getElementById(`player-container-${projectId}`).innerHTML = renderPlayer(project);
+            lucide.createIcons();
+        }
+
+        // Logic: Play Video
+        function handlePlay(projectId) {
+            projectStates[projectId].isPlaying = true;
+            const project = PROJECTS_DATA.find(p => p.id === projectId);
+            document.getElementById(`player-container-${projectId}`).innerHTML = renderPlayer(project);
+        }
+
+
+        // Render Team
+        function renderTeam() {
+            const container = document.getElementById('team-sections-container');
+            const t = TRANSLATIONS[currentLang];
+            
+            // Define Groups based on user request
+            const TEAM_GROUPS = [
+                {
+                    name_en: "Game Design Team",
+                    name_zh: "游戏设计团队",
+                    members: ["Marc-Antoine Pietri", "Ash Ismail", "Nicolas Jaujou", "Ales Rajar", "David Bolle", "Frankie Peng"]
+                },
+                {
+                    name_en: "Art Team",
+                    name_zh: "美术团队",
+                    members: ["Donglu Yu", "Mike Fudge", "Greg Rassam", "Nicolas Novali", "Hans Park", "Martin Oung"]
+                },
+                {
+                    name_en: "Tech Team",
+                    name_zh: "技术团队",
+                    members: ["Marc Desfosses", "Allan Lau", "Simon Clavet"] // Updated Tech Team
+                },
+                {
+                    name_en: "Animation Team",
+                    name_zh: "动画团队",
+                    members: ["Adrian Leblanc", "Simon Clavet"] // Simon Clavet also appears here for visualization clarity
+                },
+                {
+                    name_en: "Production Team",
+                    name_zh: "制作团队",
+                    members: ["Andrew Zhang", "Yanwei Wu"]
+                }
+            ];
+
+            let html = '';
+
+            TEAM_GROUPS.forEach(group => {
+                const groupName = currentLang === 'en' ? group.name_en : group.name_zh;
+                
+                // Filter members for this group
+                // We map the names to the actual data objects
+                const groupMembers = group.members.map(name => {
+                    return TEAM_DATA.find(m => m.name === name);
+                }).filter(m => m !== undefined); // Safety check
+
+                if (groupMembers.length > 0) {
+                    html += `
+                    <div class="mb-16 animate-fade-in">
+                        <div class="flex items-center gap-4 mb-8">
+                            <h3 class="font-orbitron text-2xl md:text-3xl text-cyan-400 font-bold uppercase tracking-wider">
+                                ${groupName}
+                            </h3>
+                            <div class="h-px bg-gradient-to-r from-cyan-900/50 to-transparent flex-grow"></div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                    `;
+
+                    groupMembers.forEach(member => {
+                        const role = currentLang === 'en' ? member.role_en : member.role_zh;
+                        
+                        // Guard against undefined properties using (|| [])
+                        const specialties = currentLang === 'en' ? (member.specialties_en || []) : (member.specialties_zh || []);
+                        const pastWorksTitle = t.pastWorks; // Get localized "Past Works" title
+
+                        // Generate Specialties
+                        const specs = specialties.map(s => 
+                            `<span class="px-2 py-1 bg-indigo-900/40 text-cyan-200 text-xs rounded border border-indigo-500/20 font-rajdhani font-semibold">${s}</span>`
+                        ).join('');
+                        
+                        // Generate Past Works
+                        const works = (member.pastWorks || []).map(w => 
+                            `<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-cyan-500 rounded-full"></span>${w}</li>`
+                        ).join('');
+
+                        html += `
+                        <div class="bg-slate-900/60 backdrop-blur-md border border-slate-700/50 rounded-xl p-6 hover:border-cyan-500 hover:shadow-[0_0_20px_rgba(0,255,255,0.15)] transition-all duration-300 group relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-8 h-8 border-t border-r border-cyan-500/30 group-hover:border-cyan-400 transition-colors"></div>
+                            
+                            <div class="flex items-start justify-between mb-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-16 h-16 rounded-full ${member.avatarColor} flex items-center justify-center text-white shadow-lg relative flex-shrink-0">
+                                        <span class="font-bold text-2xl font-orbitron">${member.name.charAt(0)}</span>
+                                        <div class="absolute inset-0 rounded-full border border-white/20"></div>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold font-orbitron text-white group-hover:text-cyan-400 transition-colors">${member.name}</h3>
+                                        <p class="text-indigo-300 font-medium font-rajdhani text-lg">${role}</p>
+                                    </div>
+                                </div>
+                                <div class="opacity-50 group-hover:opacity-100 transition-opacity transform group-hover:rotate-12">
+                                    <i data-lucide="${member.icon}" class="w-8 h-8 ${member.iconColor}"></i>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4 relative z-10">
+                                <div>
+                                    <h4 class="text-xs font-bold text-slate-500 uppercase mb-2 flex items-center gap-1 font-orbitron">
+                                        <i data-lucide="zap" class="w-3 h-3"></i> ${t.specialties}
+                                    </h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${specs}
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="text-xs font-bold text-slate-500 uppercase mb-2 flex items-center gap-1 font-orbitron">
+                                        <i data-lucide="award" class="w-3 h-3"></i> ${pastWorksTitle}
+                                    </h4>
+                                    <ul class="text-sm text-slate-300 space-y-1 font-rajdhani">
+                                        ${works}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+
+                    html += `
+                        </div>
+                    </div>`; // End of section
+                }
+            });
+
+            container.innerHTML = html;
+        }
+
+        // --- PARTICLE BACKGROUND ---
+        function initParticles() {
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+
+            const resize = () => {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+            };
+            window.addEventListener('resize', resize);
+            resize();
+
+            const blobs = [];
+            const count = 120; // 减少粒子数量
+            let mouseX = width / 2;
+            let mouseY = height / 2;
+            const attractionStrength = 0.00005; // 降低引力强度
+            const maxVelocity = 2; // 限制最大速度，避免粒子飞出屏幕
+
+            // Mouse listener
+            canvas.addEventListener('mousemove', (e) => {
+                // Adjust mouse coordinates for the black background layer
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+            
+            // 初始化 Blobs
+            for (let i = 0; i < count; i++) {
+                blobs.push({
+                    x: Math.random() * width, 
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.05,
+                    vy: (Math.random() - 0.5) * 0.05,
+                    radius: Math.random() * 5 + 3,
+                    hue: Math.random() * 360,
+                    swirlFactor: Math.random() * 0.05 + 0.01
+                });
+            }
+
+            const animate = () => {
+                // 1. 拖尾效果/背景：使用高透明度的黑色填充，使光晕快速衰减，消除杂乱的“墨迹”残留。
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.92)'; 
+                ctx.fillRect(0, 0, width, height); 
+                
+                // 2. 混合模式：设置为 'lighter' (提亮/相加)，实现发光流光效果
+                ctx.globalCompositeOperation = 'lighter'; 
+                
+                const time = Date.now() * 0.001; 
+                
+                blobs.forEach(b => {
+                    // --- 鼠标吸引力逻辑 ---
+                    const dx = mouseX - b.x;
+                    const dy = mouseY - b.y;
+                    const distanceSq = dx * dx + dy * dy;
+                    
+                    // 吸引力计算 (反比于距离，但强度很低)
+                    // 吸引力只在合理范围内应用，这里我们简单地应用，并依赖速度限制来控制
+                    b.vx += dx * attractionStrength;
+                    b.vy += dy * attractionStrength;
+                    
+                    // --------------------------
+
+                    // 运动逻辑：基于位置和时间生成缓慢的漩涡加速度 (保持水墨感)
+                    b.vx += Math.cos(time * b.swirlFactor + b.y * 0.01) * 0.05;
+                    b.vy += Math.sin(time * b.swirlFactor + b.x * 0.01) * 0.05;
+
+                    // 速度阻尼
+                    b.vx *= 0.96; 
+                    b.vy *= 0.96;
+
+                    // 限制最大速度
+                    const speed = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
+                    const maxVelocity = 0.5; // 进一步限制最大速度，让移动更慢、更平滑
+                    if (speed > maxVelocity) {
+                        b.vx = (b.vx / speed) * maxVelocity;
+                        b.vy = (b.vy / speed) * maxVelocity;
+                    }
+
+                    b.x += b.vx;
+                    b.y += b.vy;
+
+                    // 边界包裹
+                    if (b.x < 0) b.x = width;
+                    if (b.x > width) b.x = 0;
+                    if (b.y < 0) b.y = height;
+                    if (b.y > height) b.y = 0;
+
+                    // 颜色更新 (缓慢彩虹流动)
+                    b.hue = (b.hue + 0.1) % 360;
+
+                    // 颜色设置 (高饱和度，柔和的霓虹色)
+                    const saturation = 90; 
+                    const lightness = 65;   
+                    const color = `hsla(${b.hue}, ${saturation}%, ${lightness}%, 1)`;
+
+                    ctx.beginPath();
+                    ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+                    
+                    // 绘制发光效果 (增加阴影模糊度，强化晕染)
+                    ctx.shadowBlur = 25; 
+                    ctx.shadowColor = color;
+                    ctx.fillStyle = color;
+                    
+                    ctx.fill();
+                });
+                
+                // 重置混合模式
+                ctx.globalCompositeOperation = 'source-over';
+                
+                requestAnimationFrame(animate);
+            };
+            animate();
+        }
+    </script>
+</body>
+</html>
